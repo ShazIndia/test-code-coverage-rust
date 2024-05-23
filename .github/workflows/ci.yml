@@ -45,3 +45,23 @@ jobs:
           echo "Code coverage is below 50%"
           exit 1
         fi
+    - name: Parse line coverage
+      id: line_coverage
+      run: |
+        LINE_COVERAGE=$(jq '.data[0].totals.lines.percent' < coverage.json)
+        echo "Line coverage is ${LINE_COVERAGE}%"
+        echo "line_coverage=${LINE_COVERAGE}"
+
+    - name: Parse branch coverage
+      id: branch_coverage
+      run: |
+        BRANCH_COVERAGE=$(jq '.data[0].totals.branches.percent' < coverage.json)
+        echo "Branch coverage is ${BRANCH_COVERAGE}%"
+        echo "branch_coverage=${BRANCH_COVERAGE}" 
+
+    - name: Parse function coverage
+      id: function_coverage
+      run: |
+        FUNCTION_COVERAGE=$(jq '.data[0].totals.functions.percent' < coverage.json)
+        echo "Function coverage is ${FUNCTION_COVERAGE}%"
+        echo "function_coverage=${FUNCTION_COVERAGE}"
